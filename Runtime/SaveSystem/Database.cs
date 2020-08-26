@@ -8,6 +8,7 @@ namespace FelipeUtils.SaveSystem
 	/// </summary>
 	[System.Serializable]
 	public abstract class Database<T> : ScriptableObject
+		where T : class
 	{
 		public T dbClass;
 	}
