@@ -1,0 +1,15 @@
+{
+    "name": "AUIMannager",
+    "references": [
+        "GUID:ae8ab44a494544241a64f15b26b4daae"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

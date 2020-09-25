@@ -5,7 +5,7 @@ using UnityEngine;
 public abstract class Singleton<T> : MonoBehaviour where T : Component
 {
     public static T Instance;
-    public void AwakeSingleton(T objectRef)
+    protected void AwakeSingleton(T objectRef)
     {
         if (Instance != null)
         {
