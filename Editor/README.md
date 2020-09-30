@@ -1,0 +1,1 @@
+There are no editor scripts yet, be happy!
