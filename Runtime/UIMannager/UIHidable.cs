@@ -14,27 +14,32 @@ namespace FelipeUtils.UIMannagement
         private bool isHide = false;
         public bool IsHide { get => isHide; }
 
-        CanvasGroup canvasGroup = null;
-
-        void Awake()
+        CanvasGroup _canvasGroup = null;
+        CanvasGroup CanvasGroup
         {
-            canvasGroup = GetComponent<CanvasGroup>();
+            get
+            {
+                if(_canvasGroup == null)
+                    _canvasGroup = GetComponent<CanvasGroup>();
+                return _canvasGroup;
+            }
         }
 
         public virtual void Hide() 
         {
-            canvasGroup.alpha = 0;
-            canvasGroup.interactable = false;
+            CanvasGroup.alpha = 0;
+            CanvasGroup.interactable = false;
             isHide = true; 
         }
 
         public virtual void Show()
         {
-            canvasGroup.alpha = 1;
-            canvasGroup.interactable = true;
+            CanvasGroup.alpha = 1;
+            CanvasGroup.interactable = true;
             isHide = false;
         }
 
+        //sort, Icomparable
         public int CompareTo(UIHidable obj)
         {
             var otherName = obj.name;

@@ -1,17 +1,26 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class Singleton<T> : MonoBehaviour where T : Component
 {
-    public static T Instance;
-    protected void AwakeSingleton(T objectRef)
+    private static T instance = null;
+    public static T Instance
     {
-        if (Instance != null)
+        get
         {
-            Destroy(gameObject);
-            return;
+            if(instance == null)
+            {
+                var founded = FindObjectsOfType<T>();
+                if(founded.Length > 0)
+                {
+                    instance = founded[0];
+                    for (var i = 1; i < founded.Length - 1; i++)
+                        Destroy(founded[i].gameObject);
+                }
+            }
+            return instance;
         }
-        Instance = objectRef;
     }
 }

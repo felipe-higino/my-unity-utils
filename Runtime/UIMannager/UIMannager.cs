@@ -8,17 +8,18 @@ namespace FelipeUtils.UIMannagement
 {
     public abstract class UIMannager : Singleton<UIMannager>
     {
-        void Awake()
+        private UIHidable[] _screens = null;
+        protected UIHidable[] Screens 
         {
-            AwakeSingleton(this);
-        }
-
-        protected UIHidable[] Screens;
-    
-        protected void StartDefault()
-        {
-            Screens = FindObjectsOfType<UIHidable>();
-            Array.Sort(Screens);
+            get
+            {
+                if(_screens == null)
+                {
+                    _screens = FindObjectsOfType<UIHidable>();
+                    Array.Sort(_screens);
+                }
+                return _screens;
+            }
         }
 
         protected void HideAll()
