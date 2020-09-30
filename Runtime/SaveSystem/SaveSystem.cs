@@ -21,7 +21,7 @@ namespace FelipeUtils.SaveSystem
 		}
 		[ContextMenuItem("Show data as json", "showData")]
 		[SerializeField] 
-		D SO_DB;
+		D SO_DB = null;
 
 		private string archieve = "/Save.bin";
 

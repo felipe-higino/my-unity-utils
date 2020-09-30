@@ -10,7 +10,7 @@ namespace FelipeUtils.SaveSystem
 	public abstract class Database<T> : ScriptableObject
 		where T : class
 	{
-		public T dbClass;
+		public T dbClass = null;
 	}
 
 }
