@@ -1,0 +1,7 @@
+{
+  "name": "com.felipe.felipe-utils",
+  "version": "0.0.1",
+  "displayName": "Felipe Utils",
+  "description": "This is an example package",
+  "type": "library"
+}
