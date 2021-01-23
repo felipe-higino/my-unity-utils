@@ -1,9 +1,9 @@
 {
     "name": "FelipeUtils.SceneManagement",
     "references": [
-        "GUID:7e46d3d3148ac914e99cedf2697e6f7e",
-        "GUID:c8d8527f27b2f7c44951865ffa4575fc",
-        "GUID:e429246e72c94c74d861e85738e9d3e0"
+        "FelipeUtils.Singleton",
+        "FelipeUtils.AudioManagement",
+        "FelipeUtils.Unique"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
