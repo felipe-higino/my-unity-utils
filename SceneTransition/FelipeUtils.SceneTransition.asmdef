@@ -1,0 +1,16 @@
+{
+    "name": "FelipeUtils.SceneTransition",
+    "references": [
+        "GUID:464fedc4fd8e9374da3447ef31370768",
+        "GUID:e429246e72c94c74d861e85738e9d3e0"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
