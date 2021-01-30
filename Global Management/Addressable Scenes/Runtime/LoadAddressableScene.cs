@@ -16,6 +16,5 @@ public class LoadAddressableScene : MonoBehaviour
     public async void Do_ChangeScene()
     {
         await SceneTransitionManager.LoadNewScene(sceneAddress);
-        Debug.Log("finished!");
     }
 }

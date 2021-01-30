@@ -16,12 +16,14 @@ public static class StaticGlobalSpawner
 
         foreach (var asset in everywhereAssets)
         {
-            InstantiateAsset(asset);
+            if (asset.ResourceType == typeof(GameObject))
+                InstantiateAsset(asset);
         }
     }
 
     private async static void InstantiateAsset(IResourceLocation obj)
     {
-        await Addressables.InstantiateAsync(obj).Task;
+        var spawned = await Addressables.InstantiateAsync(obj).Task;
+        spawned.name = $"[{obj.PrimaryKey}]";
     }
 }
