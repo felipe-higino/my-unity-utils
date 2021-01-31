@@ -9,7 +9,7 @@ public static class StaticGlobalSpawner
     private const string label = "Everywhere";
 
     [RuntimeInitializeOnLoadMethod]
-    public async static void Init()
+    private async static void Init()
     {
         var everywhereAssets =
             await Addressables.LoadResourceLocationsAsync(label).Task;
