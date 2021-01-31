@@ -1,9 +1,11 @@
 {
-    "name": "FelipeUtils.Tags",
+    "name": "FelipeUtils.AddressableScenes.Editor",
     "references": [
-        "GUID:464fedc4fd8e9374da3447ef31370768"
+        "GUID:4066c327f39cf59499668062db61a91c"
     ],
-    "includePlatforms": [],
+    "includePlatforms": [
+        "Editor"
+    ],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": false,
