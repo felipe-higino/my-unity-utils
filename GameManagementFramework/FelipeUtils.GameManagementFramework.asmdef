@@ -1,5 +1,5 @@
 {
-    "name": "FelipeUtils.Management",
+    "name": "FelipeUtils.GameManagementFramework",
     "references": [
         "Unity.Addressables",
         "Unity.ResourceManager"
