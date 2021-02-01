@@ -22,6 +22,9 @@ public class LocalizationEditorWindow : EditorWindow
 
     private void OnGUI()
     {
+        if (null == configAsset)
+            LoadConfigAsset();
+
         if (null == configAssetEditor && null != configAsset)
             configAssetEditor = Editor.CreateEditor(configAsset);
 
@@ -39,12 +42,23 @@ public class LocalizationEditorWindow : EditorWindow
         else
         {
             EditorGUILayout.LabelField("asset screen");
-            configAssetEditor?.OnInspectorGUI();
+            if (Application.isPlaying)
+            {
+                if (GUILayout.Button("Next Language"))
+                    LocalizationSystem.LanguageIndex++;
+                if (GUILayout.Button("Previous Language"))
+                    LocalizationSystem.LanguageIndex--;
+            }
+            else
+            {
+                configAssetEditor?.OnInspectorGUI();
 
-            var validLocalizationAsset = null != configAsset.LocalizationTextAsset.editorAsset;
-            if (validLocalizationAsset)
-                if (GUILayout.Button("Download new TSV"))
-                    DownloadAndOverrideText();
+                var validLocalizationAsset =
+                    null != configAsset.LocalizationTextAsset.editorAsset;
+                if (validLocalizationAsset)
+                    if (GUILayout.Button("Download new TSV"))
+                        DownloadAndOverrideText();
+            }
         }
     }
 

@@ -55,7 +55,10 @@ public class TranslationSheet
         var line = ListOfLines.ElementAtOrDefault(tagIndex + 1);
         var text = line?.lines.ElementAtOrDefault(languageIndex + 1);
         if (text == "")
+        {
+            Debug.LogError("text is empty");
             return "-MISSING-TEXT-";
+        }
 
         return text;
     }

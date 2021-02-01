@@ -20,7 +20,6 @@ namespace UnityEngine.AddressableAssets
 
 public class SO_LocalizationConfig : ScriptableObject
 {
-    [Space(15)]
     [SerializeField, ReadOnly]
     private List<string> languageTags = default;
     public List<string> LanguageTags => languageTags;

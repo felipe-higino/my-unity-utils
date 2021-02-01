@@ -9,16 +9,29 @@ internal class UnityEvent_TranslateText : UnityEvent<string> { }
 
 public class RequireLocalizedText : MonoBehaviour
 {
-    [SerializeField]
-    private UnityEvent_TranslateText MethodToChangeText = default;
+    internal static List<RequireLocalizedText> AllLocalizableTexts = new List<RequireLocalizedText>();
 
     [SerializeField]
     private string localizationTag = default;
 
-    [ContextMenu("change text")]
-    private void ChangeText()
+    [SerializeField, Space(15)]
+    private UnityEvent_TranslateText MethodToChangeText = default;
+
+    [ContextMenu("Change text")]
+    public void RequireThisComponentUpdate()
     {
-        var localizedText = LocalizationSystem.GetLocalizedText(localizationTag);
+        var localizedText = LocalizationSystem.GetLocalizedTextWithTag(localizationTag);
         MethodToChangeText?.Invoke(localizedText);
     }
+
+    private void Awake()
+    {
+        AllLocalizableTexts.Add(this);
+    }
+
+    private void OnDestroy()
+    {
+        AllLocalizableTexts.Remove(this);
+    }
+
 }
