@@ -5,8 +5,10 @@ using UnityEngine.AddressableAssets;
 
 public static class LocalizationSystem
 {
+
     private static TextAsset TSVAsset = default;
-    public static TranslationSheet Sheet { get; private set; }
+    private static TranslationSheet Sheet { get; set; }
+    private static string ActualLanguage { get; set; } = "en";
 
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
     private async static void Init()
@@ -19,5 +21,12 @@ public static class LocalizationSystem
             return;
         }
         Sheet = new TranslationSheet(TSVAsset.text);
+    }
+
+    public static string GetLocalizedText(string tag)
+    {
+        if (Sheet == null)
+            return "-NO-TRANSLATION-SHEET-";
+        return Sheet.GetText(tag, ActualLanguage);
     }
 }

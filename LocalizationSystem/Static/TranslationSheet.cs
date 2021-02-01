@@ -10,8 +10,8 @@ public class Line
 
 public class TranslationSheet
 {
-    public List<string> Languages { get; private set; }
-    public List<string> Tags { get; private set; }
+    public List<string> Languages { get; } = new List<string>();
+    public List<string> Tags { get; } = new List<string>();
 
     private List<Line> ListOfLines = new List<Line>();
 
