@@ -1,16 +1,14 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEditor;
 using UnityEngine.AddressableAssets;
 
 public static class LocalizationSystem
 {
     private static TextAsset TSVAsset = default;
-    public static TranslationSheet sheet = new TranslationSheet();
+    public static TranslationSheet Sheet { get; private set; }
 
-    [RuntimeInitializeOnLoadMethod]
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
     private async static void Init()
     {
         TSVAsset = await Addressables.LoadAssetAsync<TextAsset>("Localization").Task;
@@ -20,6 +18,6 @@ public static class LocalizationSystem
             Debug.LogError("Error finding localization text asset");
             return;
         }
-        sheet.FromTSV(TSVAsset.text);
+        Sheet = new TranslationSheet(TSVAsset.text);
     }
 }

@@ -1,12 +1,15 @@
-﻿using System.Collections;
+﻿#if UNITY_EDITOR
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+
 using UnityEditor;
 
 public class LocalizationEditorWindow : EditorWindow
 {
     private const string configAssetName = "LocalizationConfig";
+
     private static SO_LocalizationConfig configAsset = null;
     private static Editor configAssetEditor = null;
 
@@ -17,44 +20,38 @@ public class LocalizationEditorWindow : EditorWindow
         LoadConfigAsset();
     }
 
-    private void OnEnable()
-    {
-        LoadConfigAsset();
-        if (null != configAsset)
-            configAssetEditor = Editor.CreateEditor(configAsset);
-    }
-
     private void OnGUI()
     {
+        if (null == configAssetEditor && null != configAsset)
+            configAssetEditor = Editor.CreateEditor(configAsset);
+
+        //create asset GUI
         if (null == configAsset)
-            ConfigAssetNotFound();
+        {
+            EditorGUILayout.LabelField("config asset not found");
+            if (GUILayout.Button("Create config asset"))
+            {
+                CreateConfigAsset();
+                LoadConfigAsset();
+            }
+        }
+        //scriptable object GUI
         else
-            AssetScreen();
-    }
+        {
+            EditorGUILayout.LabelField("asset screen");
+            configAssetEditor?.OnInspectorGUI();
 
-    private void ConfigAssetNotFound()
-    {
-        EditorGUILayout.LabelField("config asset not found");
-        if (GUILayout.Button("Create config asset"))
-            CreateConfigAsset();
-    }
-
-    private void AssetScreen()
-    {
-        EditorGUILayout.LabelField("asset screen");
-        configAssetEditor?.OnInspectorGUI();
-
-        var validLocalizationAsset = null != configAsset.LocalizationTextAsset.editorAsset;
-        if (validLocalizationAsset)
-            if (GUILayout.Button("Download new TSV"))
-                DownloadAndOverrideText();
+            var validLocalizationAsset = null != configAsset.LocalizationTextAsset.editorAsset;
+            if (validLocalizationAsset)
+                if (GUILayout.Button("Download new TSV"))
+                    DownloadAndOverrideText();
+        }
     }
 
     private static void CreateConfigAsset()
     {
         var instance = ScriptableObject.CreateInstance<SO_LocalizationConfig>();
         AssetDatabase.CreateAsset(instance, $"Assets/Resources/{configAssetName}.asset");
-        LoadConfigAsset();
     }
 
     private static void LoadConfigAsset()
@@ -62,11 +59,15 @@ public class LocalizationEditorWindow : EditorWindow
         configAsset = Resources.Load<SO_LocalizationConfig>(configAssetName);
     }
 
-    private async void DownloadAndOverrideText()
+    private static async void DownloadAndOverrideText()
     {
         var tsv = await configAsset.DownloadTSV();
         var textAssetGUID = configAsset.LocalizationTextAsset.AssetGUID;
         var path = AssetDatabase.GUIDToAssetPath(textAssetGUID);
         File.WriteAllText(path, tsv);
+        AssetDatabase.Refresh();
+        Debug.Log("Finished to write file!");
     }
 }
+
+#endif
