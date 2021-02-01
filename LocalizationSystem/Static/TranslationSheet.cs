@@ -37,9 +37,8 @@ public class TranslationSheet
         Languages.RemoveAt(0);
     }
 
-    public string GetText(string tag, string language)
+    public string GetText(string tag, int languageIndex)
     {
-        var languageIndex = Languages.IndexOf(language);
         if (languageIndex == -1)
         {
             Debug.LogError("Lang error");
@@ -62,4 +61,30 @@ public class TranslationSheet
 
         return text;
     }
+
+    // public string GetText_tagname(string tag, string language)
+    // {
+    //     var languageIndex = Languages.IndexOf(language);
+    //     if (languageIndex == -1)
+    //     {
+    //         Debug.LogError("Lang error");
+    //         return "-LANG-ERROR-";
+    //     }
+    //     var tagIndex = Tags.IndexOf(tag);
+    //     if (languageIndex == -1)
+    //     {
+    //         Debug.LogError("Tag error");
+    //         return "-TAG-ERROR-";
+    //     }
+
+    //     var line = ListOfLines.ElementAtOrDefault(tagIndex + 1);
+    //     var text = line?.lines.ElementAtOrDefault(languageIndex + 1);
+    //     if (text == "")
+    //     {
+    //         Debug.LogError("text is empty");
+    //         return "-MISSING-TEXT-";
+    //     }
+
+    //     return text;
+    // }
 }

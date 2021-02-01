@@ -9,25 +9,6 @@ public static class LocalizationSystem
     private static TextAsset TSVAsset = default;
     private static TranslationSheet Sheet { get; set; }
 
-    private static string languageName = "";
-    public static string LanguageName
-    {
-        get => languageName;
-        set
-        {
-            if (!Sheet.Languages.Contains(value))
-            {
-                Debug.LogError("Invalid language");
-                return;
-            }
-
-            languageName = value;
-            languageIndex = Sheet.Languages.IndexOf(value);
-
-            UpdateAllTexts();
-        }
-    }
-
     private static int languageIndex = 0;
     public static int LanguageIndex
     {
@@ -42,7 +23,7 @@ public static class LocalizationSystem
                 index = 0;
 
             languageIndex = index;
-            languageName = Sheet.Languages.ElementAtOrDefault(index);
+            // languageName = Sheet.Languages.ElementAtOrDefault(index);
 
             UpdateAllTexts();
         }
@@ -66,7 +47,7 @@ public static class LocalizationSystem
             Debug.LogError("No translation sheet found");
             return "-NO-TRANSLATION-SHEET-";
         }
-        return Sheet.GetText(tag, languageName);
+        return Sheet.GetText(tag, languageIndex);
     }
 
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
@@ -80,7 +61,9 @@ public static class LocalizationSystem
             return;
         }
         Sheet = new TranslationSheet(TSVAsset.text);
-        languageName = Sheet.Languages?.FirstOrDefault();
+
+        languageIndex = 0;
+        // languageName = Sheet.Languages?.FirstOrDefault();
 
         var provisoryObject = new GameObject("[My Localization]");
         provisoryObject.AddComponent<ProvisoryObject>();
@@ -96,4 +79,22 @@ public static class LocalizationSystem
         }
     }
 
+    // private static string languageName = "";
+    // public static string LanguageName
+    // {
+    //     get => languageName;
+    //     set
+    //     {
+    //         if (!Sheet.Languages.Contains(value))
+    //         {
+    //             Debug.LogError("Invalid language");
+    //             return;
+    //         }
+
+    //         languageName = value;
+    //         languageIndex = Sheet.Languages.IndexOf(value);
+
+    //         UpdateAllTexts();
+    //     }
+    // }
 }
