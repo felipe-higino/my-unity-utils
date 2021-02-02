@@ -1,7 +1,12 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.Audio;
+
+[Serializable]
+internal class UnityEvent_SetAudioClip : UnityEvent<AudioClip> { }
 
 public class RequireLocalizedAudio : MonoBehaviour
 {
@@ -11,7 +16,7 @@ public class RequireLocalizedAudio : MonoBehaviour
     private string audioTag = default;
 
     [SerializeField, Space(15)]
-    private AudioSource source = default;
+    private UnityEvent_SetAudioClip SetClipMethod = default;
 
     [ContextMenu("Update this audio language")]
     public void UpdateThisAudioLanguage()
@@ -23,7 +28,7 @@ public class RequireLocalizedAudio : MonoBehaviour
             Debug.LogError("invalid audio clip");
             return;
         }
-        source.clip = localizedClip;
+        SetClipMethod?.Invoke(localizedClip);
     }
 
     private void Awake()
