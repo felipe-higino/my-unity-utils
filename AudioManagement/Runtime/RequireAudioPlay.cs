@@ -35,26 +35,31 @@ public class RequireAudioPlay : MonoBehaviour
         }
     }
 
+    [ContextMenu("play clip")]
     public void PlayAudioClip()
     {
         AudioManager?.PlayOneShoot(clip, ClipSource);
     }
 
+    [ContextMenu("play clip overriding")]
     public void PlayClipOverriding()
     {
         AudioManager?.PlayLonely(clip, ClipSource);
     }
 
+    [ContextMenu("Stop clip")]
     public void StopAudioClip()
     {
         AudioManager?.StopSource(ClipSource);
     }
 
+    [ContextMenu("Pause clip")]
     public void PauseAudioClip()
     {
         AudioManager?.PauseSource(ClipSource);
     }
 
+    [ContextMenu("Unpause clip")]
     public void UnpauseAudioClip()
     {
         AudioManager?.UnpauseSource(ClipSource);
