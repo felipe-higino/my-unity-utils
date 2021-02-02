@@ -6,8 +6,17 @@ using UnityEngine.Audio;
 
 public class RequireAudioPlay : MonoBehaviour
 {
-    [SerializeField] AudioMixerGroup group = null;
-    [SerializeField] AudioClip clip = null;
+    [SerializeField]
+    private AudioMixerGroup group = null;
+
+    [SerializeField]
+    private AudioClip clip = null;
+
+    public AudioClip Clip
+    {
+        get => clip;
+        set => clip = value;
+    }
 
     Unique_AudioManager AudioManager => Unique<Unique_AudioManager>.Get();
 

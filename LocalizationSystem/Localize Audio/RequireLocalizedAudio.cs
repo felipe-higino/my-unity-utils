@@ -16,7 +16,7 @@ public class RequireLocalizedAudio : MonoBehaviour
     private string audioTag = default;
 
     [SerializeField, Space(15)]
-    private UnityEvent_SetAudioClip SetClipMethod = default;
+    private UnityEvent_SetAudioClip MethodToSetClip = default;
 
     [ContextMenu("Update this audio language")]
     public void UpdateThisAudioLanguage()
@@ -28,7 +28,7 @@ public class RequireLocalizedAudio : MonoBehaviour
             Debug.LogError("invalid audio clip");
             return;
         }
-        SetClipMethod?.Invoke(localizedClip);
+        MethodToSetClip?.Invoke(localizedClip);
     }
 
     private void Awake()

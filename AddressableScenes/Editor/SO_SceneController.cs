@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
-[CreateAssetMenu(fileName = "Scene Controller UI", menuName = "Scene Controller", order = 50)]
+[CreateAssetMenu(fileName = "Scene Controller UI", menuName = "Felipe Utils/Scene Controller", order = 50)]
 public class SO_SceneController : ScriptableObject
 {
     [SerializeField]

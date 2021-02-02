@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "SO_AudioTags", menuName = "Localizable Audio Database", order = 0)]
+[CreateAssetMenu(fileName = "SO_LocalizableAudioDatabase", menuName = "Felipe Utils/Localizable Audio Database", order = 50)]
 internal class SO_LocalizableAudioDatabase : ScriptableObject
 {
     [SerializeField]
