@@ -5,40 +5,45 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
-internal static class LocalizableAudioSheet
+namespace LocalizationSystemAudio
 {
-    private static List<string> Tags = new List<string>();
-    private static SO_LocalizableAudioDatabase AudioDatabase = default;
 
-    static internal async Task Init()
+    internal static class LocalizableAudioSheet
     {
-        AudioDatabase =
-            await Addressables.LoadAssetAsync<SO_LocalizableAudioDatabase>("AudioTags").Task;
-        if (null == AudioDatabase)
+        private static List<string> Tags = new List<string>();
+        private static SO_LocalizableAudioDatabase AudioDatabase = default;
+
+        static internal async Task Init()
         {
-            Debug.LogError("Addressable with tag \"AudioTags\" not found");
-            return;
+            AudioDatabase =
+                await Addressables.LoadAssetAsync<SO_LocalizableAudioDatabase>("AudioTags").Task;
+            if (null == AudioDatabase)
+            {
+                Debug.LogError("Addressable with tag \"AudioTags\" not found");
+                return;
+            }
+
+            foreach (var tagableClip in AudioDatabase.ClipsTable)
+            {
+                Tags.Add(tagableClip.Tag);
+            }
         }
 
-        foreach (var tagableClip in AudioDatabase.ClipsTable)
+        internal static AudioClip GetLocalizedAudioByTag(string tag)
         {
-            Tags.Add(tagableClip.Tag);
+            if (null == AudioDatabase)
+            {
+                Debug.LogError("Audio database is null");
+                return null;
+            }
+
+            var languageIndex = LocalizationSystem.LanguageIndex;
+            var tagIndex = Tags.IndexOf(tag);
+
+            return AudioDatabase.ClipsTable
+                .ElementAtOrDefault(tagIndex)?.Clips
+                .ElementAtOrDefault(languageIndex);
         }
     }
 
-    internal static AudioClip GetLocalizedAudioByTag(string tag)
-    {
-        if (null == AudioDatabase)
-        {
-            Debug.LogError("Audio database is null");
-            return null;
-        }
-
-        var languageIndex = LocalizationSystem.LanguageIndex;
-        var tagIndex = Tags.IndexOf(tag);
-
-        return AudioDatabase.ClipsTable
-            .ElementAtOrDefault(tagIndex)?.Clips
-            .ElementAtOrDefault(languageIndex);
-    }
 }

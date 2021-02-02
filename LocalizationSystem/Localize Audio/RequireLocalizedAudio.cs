@@ -4,40 +4,43 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Audio;
-
-[Serializable]
-internal class UnityEvent_SetAudioClip : UnityEvent<AudioClip> { }
-
-public class RequireLocalizedAudio : MonoBehaviour
+namespace LocalizationSystemAudio
 {
-    internal static List<RequireLocalizedAudio> AllLocalizableAudio = new List<RequireLocalizedAudio>();
+    [Serializable]
+    public class UnityEvent_SetAudioClip : UnityEvent<AudioClip> { }
 
-    [SerializeField]
-    private string audioTag = default;
-
-    [SerializeField, Space(15)]
-    private UnityEvent_SetAudioClip MethodToSetClip = default;
-
-    [ContextMenu("Update this audio language")]
-    public void UpdateThisAudioLanguage()
+    public class RequireLocalizedAudio : MonoBehaviour
     {
-        var localizedClip =
-            LocalizableAudioSheet.GetLocalizedAudioByTag(audioTag);
-        if (null == localizedClip)
+        internal static List<RequireLocalizedAudio> AllLocalizableAudio = new List<RequireLocalizedAudio>();
+
+        [SerializeField]
+        private string audioTag = default;
+
+        [SerializeField, Space(15)]
+        private UnityEvent_SetAudioClip MethodToSetClip = default;
+
+        [ContextMenu("Update this audio language")]
+        public void UpdateThisAudioLanguage()
         {
-            Debug.LogError("invalid audio clip");
-            return;
+            var localizedClip =
+                LocalizableAudioSheet.GetLocalizedAudioByTag(audioTag);
+            if (null == localizedClip)
+            {
+                Debug.LogError("invalid audio clip");
+                return;
+            }
+            MethodToSetClip?.Invoke(localizedClip);
         }
-        MethodToSetClip?.Invoke(localizedClip);
-    }
 
-    private void Awake()
-    {
-        AllLocalizableAudio.Add(this);
-    }
+        private void Awake()
+        {
+            AllLocalizableAudio.Add(this);
+        }
 
-    private void OnDestroy()
-    {
-        AllLocalizableAudio.Remove(this);
+        private void OnDestroy()
+        {
+            AllLocalizableAudio.Remove(this);
+        }
     }
 }
+

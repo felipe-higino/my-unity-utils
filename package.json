@@ -1,6 +1,6 @@
 {
   "name": "com.felipe.felipe-utils",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "displayName": "Felipe Utils",
   "description": "Unity Library, with usefull extensions and components .",
   "type": "library",

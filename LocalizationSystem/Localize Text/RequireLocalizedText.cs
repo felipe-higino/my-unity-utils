@@ -4,35 +4,39 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-[Serializable]
-internal class UnityEvent_TranslateText : UnityEvent<string> { }
-
-public class RequireLocalizedText : MonoBehaviour
+namespace LocalizationSystemText
 {
-    internal static List<RequireLocalizedText> AllLocalizableTexts = new List<RequireLocalizedText>();
+    [Serializable]
+    public class UnityEvent_TranslateText : UnityEvent<string> { }
 
-    [SerializeField]
-    private string textLocalizationTag = default;
-
-    [SerializeField, Space(15)]
-    private UnityEvent_TranslateText MethodToChangeText = default;
-
-    [ContextMenu("Update this text language")]
-    public void UpdateThisTextLanguage()
+    public class RequireLocalizedText : MonoBehaviour
     {
-        var localizedText =
-            LocalizableTextSheet.GetLocalizedTextByTag(textLocalizationTag);
-        MethodToChangeText?.Invoke(localizedText);
-    }
+        internal static List<RequireLocalizedText> AllLocalizableTexts = new List<RequireLocalizedText>();
 
-    private void Awake()
-    {
-        AllLocalizableTexts.Add(this);
-    }
+        [SerializeField]
+        private string textLocalizationTag = default;
 
-    private void OnDestroy()
-    {
-        AllLocalizableTexts.Remove(this);
+        [SerializeField, Space(15)]
+        private UnityEvent_TranslateText MethodToChangeText = default;
+
+        [ContextMenu("Update this text language")]
+        public void UpdateThisTextLanguage()
+        {
+            var localizedText =
+                LocalizableTextSheet.GetLocalizedTextByTag(textLocalizationTag);
+            MethodToChangeText?.Invoke(localizedText);
+        }
+
+        private void Awake()
+        {
+            AllLocalizableTexts.Add(this);
+        }
+
+        private void OnDestroy()
+        {
+            AllLocalizableTexts.Remove(this);
+        }
+
     }
 
 }

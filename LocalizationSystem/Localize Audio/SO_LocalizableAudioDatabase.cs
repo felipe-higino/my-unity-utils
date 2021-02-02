@@ -3,17 +3,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "SO_LocalizableAudioDatabase", menuName = "Felipe Utils/Localizable Audio Database", order = 50)]
-internal class SO_LocalizableAudioDatabase : ScriptableObject
+namespace LocalizationSystemAudio
 {
-    [SerializeField]
-    private List<TagableClip> clipsTable = default;
-    internal List<TagableClip> ClipsTable => clipsTable;
-
-    [Serializable]
-    internal class TagableClip
+    [CreateAssetMenu(fileName = "SO_LocalizableAudioDatabase", menuName = "Felipe Utils/Localizable Audio Database", order = 50)]
+    public class SO_LocalizableAudioDatabase : ScriptableObject
     {
-        public string Tag = default;
-        public List<AudioClip> Clips = default;
+        [SerializeField]
+        private List<TagableClip> clipsTable = default;
+        internal List<TagableClip> ClipsTable => clipsTable;
+
+        [Serializable]
+        internal class TagableClip
+        {
+            public string Tag = default;
+            public List<AudioClip> Clips = default;
+        }
     }
 }

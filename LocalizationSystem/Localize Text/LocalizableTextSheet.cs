@@ -4,36 +4,41 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
-internal static class LocalizableTextSheet
+namespace LocalizationSystemText
 {
-    private static TextAsset TSVAsset = default;
-    private static TextLocalizationTable TextsTable { get; set; }
-
-    static internal async Task Init()
+    internal static class LocalizableTextSheet
     {
-        TSVAsset =
-            await Addressables.LoadAssetAsync<TextAsset>("Localization").Task;
+        private static TextAsset TSVAsset = default;
+        private static TextLocalizationTable TextsTable { get; set; }
 
-        if (null == TSVAsset)
+        static internal async Task Init()
         {
-            Debug.LogError("Error finding localization text asset");
-            return;
+            TSVAsset =
+                await Addressables.LoadAssetAsync<TextAsset>("Localization").Task;
+
+            if (null == TSVAsset)
+            {
+                Debug.LogError("Error finding localization text asset");
+                return;
+            }
+
+            TextsTable = new TextLocalizationTable(TSVAsset.text);
+
+            var numberOfLanguages = TextsTable.Languages.Count;
+            LocalizationSystem.NumberOfLanguages = numberOfLanguages;
         }
 
-        TextsTable = new TextLocalizationTable(TSVAsset.text);
-
-        var numberOfLanguages = TextsTable.Languages.Count;
-        LocalizationSystem.NumberOfLanguages = numberOfLanguages;
-    }
-
-    internal static string GetLocalizedTextByTag(string tag)
-    {
-        if (TextsTable == null)
+        internal static string GetLocalizedTextByTag(string tag)
         {
-            Debug.LogError("No translation sheet found");
-            return "-NO-TRANSLATION-SHEET-";
+            if (TextsTable == null)
+            {
+                Debug.LogError("No translation sheet found");
+                return "-NO-TRANSLATION-SHEET-";
+            }
+            var languageIndex = LocalizationSystem.LanguageIndex;
+            return TextsTable.GetText(tag, languageIndex);
         }
-        var languageIndex = LocalizationSystem.LanguageIndex;
-        return TextsTable.GetText(tag, languageIndex);
     }
+
 }
+
