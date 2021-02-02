@@ -3,62 +3,66 @@ using UnityEngine;
 using System.Linq;
 using System.Collections.Generic;
 
-internal class Line
+namespace LocalizationSystemText
 {
-    internal string[] lines = default;
-}
-
-internal class TextLocalizationTable
-{
-    internal List<string> Languages { get; } = new List<string>();
-    internal List<string> Tags { get; } = new List<string>();
-
-    private List<Line> ListOfLines = new List<Line>();
-
-    internal TextLocalizationTable(string tsvString)
+    internal class Line
     {
-        var lines = tsvString.Split('\n');
-
-        ListOfLines.Clear();
-        foreach (var line in lines)
-        {
-            var items = line.Split('\t');
-            var newLine = new Line { lines = items };
-
-            Tags.Add(items.FirstOrDefault());
-            ListOfLines.Add(newLine);
-        }
-        Tags.RemoveAt(0);
-
-        Languages = lines
-            .FirstOrDefault()
-            .Split('\t')
-            .ToList();
-        Languages.RemoveAt(0);
+        internal string[] lines = default;
     }
 
-    internal string GetText(string tag, int languageIndex)
+    internal class TextLocalizationTable
     {
-        if (languageIndex == -1)
+        internal List<string> Languages { get; } = new List<string>();
+        internal List<string> Tags { get; } = new List<string>();
+
+        private List<Line> ListOfLines = new List<Line>();
+
+        internal TextLocalizationTable(string tsvString)
         {
-            Debug.LogError("Lang error");
-            return "-LANG-ERROR-";
-        }
-        var tagIndex = Tags.IndexOf(tag);
-        if (languageIndex == -1)
-        {
-            Debug.LogError("Tag error");
-            return "-TAG-ERROR-";
+            var lines = tsvString.Split('\n');
+
+            ListOfLines.Clear();
+            foreach (var line in lines)
+            {
+                var items = line.Split('\t');
+                var newLine = new Line { lines = items };
+
+                Tags.Add(items.FirstOrDefault());
+                ListOfLines.Add(newLine);
+            }
+            Tags.RemoveAt(0);
+
+            Languages = lines
+                .FirstOrDefault()
+                .Split('\t')
+                .ToList();
+            Languages.RemoveAt(0);
         }
 
-        var line = ListOfLines.ElementAtOrDefault(tagIndex + 1);
-        var text = line?.lines.ElementAtOrDefault(languageIndex + 1);
-        if (text == "")
+        internal string GetText(string tag, int languageIndex)
         {
-            Debug.LogError("text is empty");
-            return "-MISSING-TEXT-";
-        }
+            if (languageIndex == -1)
+            {
+                Debug.LogError("Lang error");
+                return "-LANG-ERROR-";
+            }
+            var tagIndex = Tags.IndexOf(tag);
+            if (languageIndex == -1)
+            {
+                Debug.LogError("Tag error");
+                return "-TAG-ERROR-";
+            }
 
-        return text;
+            var line = ListOfLines.ElementAtOrDefault(tagIndex + 1);
+            var text = line?.lines.ElementAtOrDefault(languageIndex + 1);
+            if (text == "")
+            {
+                Debug.LogError("text is empty");
+                return "-MISSING-TEXT-";
+            }
+
+            return text;
+        }
     }
+
 }

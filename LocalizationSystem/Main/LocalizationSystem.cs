@@ -1,9 +1,9 @@
-﻿using System.Linq;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
+using LocalizationSystemAudio;
+using LocalizationSystemText;
 
 public static class LocalizationSystem
 {
