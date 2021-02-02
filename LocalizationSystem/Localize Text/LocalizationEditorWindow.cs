@@ -6,17 +6,17 @@ using UnityEngine;
 
 using UnityEditor;
 
-public class LocalizationEditorWindow : EditorWindow
+internal class LocalizationEditorWindow : EditorWindow
 {
-    private const string configAssetName = "LocalizationConfig";
+    private const string configAssetName = "TextsLocalizationConfig";
 
-    private static SO_LocalizationConfig configAsset = null;
+    private static SO_TextLocalization configAsset = null;
     private static Editor configAssetEditor = null;
 
-    [MenuItem("Felipe Utils/Localization")]
+    [MenuItem("Felipe Utils/Text Localization Helper")]
     private static void ShowWindow()
     {
-        GetWindow<LocalizationEditorWindow>("Localization Window");
+        GetWindow<LocalizationEditorWindow>("Text Localization Helper");
         LoadConfigAsset();
     }
 
@@ -64,13 +64,13 @@ public class LocalizationEditorWindow : EditorWindow
 
     private static void CreateConfigAsset()
     {
-        var instance = ScriptableObject.CreateInstance<SO_LocalizationConfig>();
+        var instance = ScriptableObject.CreateInstance<SO_TextLocalization>();
         AssetDatabase.CreateAsset(instance, $"Assets/Resources/{configAssetName}.asset");
     }
 
     private static void LoadConfigAsset()
     {
-        configAsset = Resources.Load<SO_LocalizationConfig>(configAssetName);
+        configAsset = Resources.Load<SO_TextLocalization>(configAssetName);
     }
 
     private static async void DownloadAndOverrideText()

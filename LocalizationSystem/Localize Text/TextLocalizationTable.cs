@@ -3,19 +3,19 @@ using UnityEngine;
 using System.Linq;
 using System.Collections.Generic;
 
-public class Line
+internal class Line
 {
-    public string[] lines = default;
+    internal string[] lines = default;
 }
 
-public class TranslationSheet
+internal class TextLocalizationTable
 {
-    public List<string> Languages { get; } = new List<string>();
-    public List<string> Tags { get; } = new List<string>();
+    internal List<string> Languages { get; } = new List<string>();
+    internal List<string> Tags { get; } = new List<string>();
 
     private List<Line> ListOfLines = new List<Line>();
 
-    public TranslationSheet(string tsvString)
+    internal TextLocalizationTable(string tsvString)
     {
         var lines = tsvString.Split('\n');
 
@@ -37,7 +37,7 @@ public class TranslationSheet
         Languages.RemoveAt(0);
     }
 
-    public string GetText(string tag, int languageIndex)
+    internal string GetText(string tag, int languageIndex)
     {
         if (languageIndex == -1)
         {
@@ -61,30 +61,4 @@ public class TranslationSheet
 
         return text;
     }
-
-    // public string GetText_tagname(string tag, string language)
-    // {
-    //     var languageIndex = Languages.IndexOf(language);
-    //     if (languageIndex == -1)
-    //     {
-    //         Debug.LogError("Lang error");
-    //         return "-LANG-ERROR-";
-    //     }
-    //     var tagIndex = Tags.IndexOf(tag);
-    //     if (languageIndex == -1)
-    //     {
-    //         Debug.LogError("Tag error");
-    //         return "-TAG-ERROR-";
-    //     }
-
-    //     var line = ListOfLines.ElementAtOrDefault(tagIndex + 1);
-    //     var text = line?.lines.ElementAtOrDefault(languageIndex + 1);
-    //     if (text == "")
-    //     {
-    //         Debug.LogError("text is empty");
-    //         return "-MISSING-TEXT-";
-    //     }
-
-    //     return text;
-    // }
 }

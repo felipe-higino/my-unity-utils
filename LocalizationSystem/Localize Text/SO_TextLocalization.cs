@@ -10,23 +10,23 @@ using UnityEngine.AddressableAssets;
 namespace UnityEngine.AddressableAssets
 {
     [Serializable]
-    public class AssetReferenceText : AssetReferenceT<TextAsset>
+    internal class AssetReferenceText : AssetReferenceT<TextAsset>
     {
-        public AssetReferenceText(string guid) : base(guid)
+        internal AssetReferenceText(string guid) : base(guid)
         {
         }
     }
 }
 
-public class SO_LocalizationConfig : ScriptableObject
+internal class SO_TextLocalization : ScriptableObject
 {
     [SerializeField, ReadOnly]
     private List<string> languageTags = default;
-    public List<string> LanguageTags => languageTags;
+    internal List<string> LanguageTags => languageTags;
 
     [SerializeField]
     private AssetReferenceText localizationTextAsset = default;
-    public AssetReferenceText LocalizationTextAsset => localizationTextAsset;
+    internal AssetReferenceText LocalizationTextAsset => localizationTextAsset;
 
     [SerializeField]
     private string docId = "";
@@ -39,7 +39,7 @@ public class SO_LocalizationConfig : ScriptableObject
         $"https://docs.google.com/spreadsheets/d/{docId}/export?format=tsv&sheet={sheetNumber}";
 
     [ContextMenu("Download and print tsv")]
-    public async Task<string> DownloadTSV()
+    internal async Task<string> DownloadTSV()
     {
         Debug.Log("Downloading TSV file ...");
         var client = new HttpClient();

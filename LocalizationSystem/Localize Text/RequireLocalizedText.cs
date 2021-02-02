@@ -12,15 +12,16 @@ public class RequireLocalizedText : MonoBehaviour
     internal static List<RequireLocalizedText> AllLocalizableTexts = new List<RequireLocalizedText>();
 
     [SerializeField]
-    private string localizationTag = default;
+    private string textLocalizationTag = default;
 
     [SerializeField, Space(15)]
     private UnityEvent_TranslateText MethodToChangeText = default;
 
-    [ContextMenu("Change text")]
-    public void RequireThisComponentUpdate()
+    [ContextMenu("Update this text language")]
+    public void UpdateThisTextLanguage()
     {
-        var localizedText = LocalizationSystem.GetLocalizedTextWithTag(localizationTag);
+        var localizedText =
+            LocalizableTextSheet.GetLocalizedTextByTag(textLocalizationTag);
         MethodToChangeText?.Invoke(localizedText);
     }
 
