@@ -6,8 +6,17 @@ using UnityEngine.Audio;
 
 public class RequireAudioPlay : MonoBehaviour
 {
-    [SerializeField] AudioMixerGroup group = null;
-    [SerializeField] AudioClip clip = null;
+    [SerializeField]
+    private AudioMixerGroup group = null;
+
+    [SerializeField]
+    private AudioClip clip = null;
+
+    public AudioClip Clip
+    {
+        get => clip;
+        set => clip = value;
+    }
 
     Unique_AudioManager AudioManager => Unique<Unique_AudioManager>.Get();
 
@@ -35,26 +44,31 @@ public class RequireAudioPlay : MonoBehaviour
         }
     }
 
+    [ContextMenu("play clip")]
     public void PlayAudioClip()
     {
         AudioManager?.PlayOneShoot(clip, ClipSource);
     }
 
+    [ContextMenu("play clip overriding")]
     public void PlayClipOverriding()
     {
         AudioManager?.PlayLonely(clip, ClipSource);
     }
 
+    [ContextMenu("Stop clip")]
     public void StopAudioClip()
     {
         AudioManager?.StopSource(ClipSource);
     }
 
+    [ContextMenu("Pause clip")]
     public void PauseAudioClip()
     {
         AudioManager?.PauseSource(ClipSource);
     }
 
+    [ContextMenu("Unpause clip")]
     public void UnpauseAudioClip()
     {
         AudioManager?.UnpauseSource(ClipSource);
