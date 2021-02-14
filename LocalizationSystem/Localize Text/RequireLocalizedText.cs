@@ -19,11 +19,27 @@ namespace LocalizationSystemText
         [SerializeField, Space(15)]
         private UnityEvent_TranslateText MethodToChangeText = default;
 
-        [ContextMenu("Update this text language")]
+        private int tagIndex = -1;
+
+        public void SetKey(string key)
+        {
+            textLocalizationTag = key;
+            var index = LocalizableTextSheet.GetLocalizedTextTagIndex(key);
+            if (tagIndex == index)
+                return;
+
+            tagIndex = index;
+            UpdateThisTextLanguage();
+        }
+
         public void UpdateThisTextLanguage()
         {
+            if (tagIndex < 0)
+                SetKey(textLocalizationTag);
+
             var localizedText =
-                LocalizableTextSheet.GetLocalizedTextByTag(textLocalizationTag);
+                LocalizableTextSheet.GetLocalizedTextByIndex(tagIndex);
+
             MethodToChangeText?.Invoke(localizedText);
         }
 

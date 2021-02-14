@@ -12,13 +12,10 @@ public static class StaticGlobalSpawner
     private async static void Init()
     {
         var everywhereAssets =
-            await Addressables.LoadResourceLocationsAsync(label).Task;
+            await Addressables.LoadResourceLocationsAsync(label, typeof(GameObject)).Task;
 
         foreach (var asset in everywhereAssets)
-        {
-            if (asset.ResourceType == typeof(GameObject))
-                InstantiateAsset(asset);
-        }
+            InstantiateAsset(asset);
     }
 
     private async static void InstantiateAsset(IResourceLocation obj)

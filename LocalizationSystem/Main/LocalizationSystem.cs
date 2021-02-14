@@ -49,9 +49,9 @@ public static class LocalizationSystem
     private async static void Init()
     {
         var initTextSheet = LocalizableTextSheet.Init();
-        var initAudioSheet = LocalizableAudioSheet.Init();
+        var initAudioDatabase = SO_LocalizableAudioDatabase.Init();
 
-        await Task.WhenAll(initTextSheet, initAudioSheet);
+        await Task.WhenAll(initTextSheet, initAudioDatabase);
 
         var provisoryObject = new GameObject("[My Localization]");
         provisoryObject.AddComponent<ProvisoryObject>();

@@ -3,15 +3,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.Audio;
+using UnityEngine.AddressableAssets;
+
 namespace LocalizationSystemAudio
 {
     [Serializable]
     public class UnityEvent_SetAudioClip : UnityEvent<AudioClip> { }
 
+    [Serializable]
+    public class AssetReferenceAudioDatabase : AssetReferenceT<SO_LocalizableAudioDatabase>
+    {
+        public AssetReferenceAudioDatabase(string guid) : base(guid)
+        {
+        }
+    }
+
     public class RequireLocalizedAudio : MonoBehaviour
     {
         internal static List<RequireLocalizedAudio> AllLocalizableAudio = new List<RequireLocalizedAudio>();
+
+        [SerializeField]
+        private AssetReferenceAudioDatabase database = default;
 
         [SerializeField]
         private string audioTag = default;
@@ -20,13 +32,15 @@ namespace LocalizationSystemAudio
         private UnityEvent_SetAudioClip MethodToSetClip = default;
 
         [ContextMenu("Update this audio language")]
-        public void UpdateThisAudioLanguage()
+        public async void UpdateThisAudioLanguage()
         {
+            var db = await database.LoadAssetAsync().Task;
+
             var localizedClip =
-                LocalizableAudioSheet.GetLocalizedAudioByTag(audioTag);
+                db?.GetLocalizedAudioByTag(audioTag);
             if (null == localizedClip)
             {
-                Debug.LogError("invalid audio clip");
+                Debug.LogError("audio not found");
                 return;
             }
             MethodToSetClip?.Invoke(localizedClip);

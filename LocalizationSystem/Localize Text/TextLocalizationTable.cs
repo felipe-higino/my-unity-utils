@@ -39,22 +39,23 @@ namespace LocalizationSystemText
             Languages.RemoveAt(0);
         }
 
-        internal string GetText(string tag, int languageIndex)
+        internal string GetTextInMatrix(int tagIndex, int langIndex)
         {
-            if (languageIndex == -1)
+            if (langIndex == -1)
             {
                 Debug.LogError("Lang error");
                 return "-LANG-ERROR-";
             }
-            var tagIndex = Tags.IndexOf(tag);
-            if (languageIndex == -1)
+
+            if (tagIndex == -1)
             {
                 Debug.LogError("Tag error");
                 return "-TAG-ERROR-";
             }
 
             var line = ListOfLines.ElementAtOrDefault(tagIndex + 1);
-            var text = line?.lines.ElementAtOrDefault(languageIndex + 1);
+            var text = line?.lines.ElementAtOrDefault(langIndex + 1);
+
             if (text == "")
             {
                 Debug.LogError("text is empty");

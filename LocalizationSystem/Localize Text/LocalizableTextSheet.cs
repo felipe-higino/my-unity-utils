@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿using System;
+using System.Linq;
+using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -8,19 +10,22 @@ namespace LocalizationSystemText
 {
     internal static class LocalizableTextSheet
     {
-        private static TextAsset TSVAsset = default;
         private static TextLocalizationTable TextsTable { get; set; }
 
         static internal async Task Init()
         {
-            TSVAsset =
-                await Addressables.LoadAssetAsync<TextAsset>("Localization").Task;
+            var TSVLocations =
+                await Addressables.LoadResourceLocationsAsync("Localization", typeof(TextAsset)).Task;
+
+            var first = TSVLocations.FirstOrDefault();
+            if (null == first)
+                return;
+
+            var TSVAsset =
+                await Addressables.LoadAssetAsync<TextAsset>(first).Task;
 
             if (null == TSVAsset)
-            {
-                Debug.LogError("Error finding localization text asset");
                 return;
-            }
 
             TextsTable = new TextLocalizationTable(TSVAsset.text);
 
@@ -28,7 +33,17 @@ namespace LocalizationSystemText
             LocalizationSystem.NumberOfLanguages = numberOfLanguages;
         }
 
-        internal static string GetLocalizedTextByTag(string tag)
+        internal static int GetLocalizedTextTagIndex(string tag)
+        {
+            if (TextsTable == null)
+            {
+                Debug.LogError("No translation sheet found");
+                return -1;
+            }
+            return TextsTable.Tags.IndexOf(tag);
+        }
+
+        internal static string GetLocalizedTextByIndex(int tagIndex)
         {
             if (TextsTable == null)
             {
@@ -36,7 +51,7 @@ namespace LocalizationSystemText
                 return "-NO-TRANSLATION-SHEET-";
             }
             var languageIndex = LocalizationSystem.LanguageIndex;
-            return TextsTable.GetText(tag, languageIndex);
+            return TextsTable.GetTextInMatrix(tagIndex, languageIndex);
         }
     }
 
