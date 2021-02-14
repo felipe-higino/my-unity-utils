@@ -34,15 +34,17 @@ namespace LocalizationSystemAudio
 
         static internal async Task Init()
         {
-            var taskPool = new List<Task>();
+            var audioDatabasesLocaltions =
+                await Addressables.LoadResourceLocationsAsync("Localization", typeof(SO_LocalizableAudioDatabase)).Task;
 
             var audioDatabases =
-                await Addressables.LoadAssetsAsync<SO_LocalizableAudioDatabase>("Localization", null).Task;
+                await Addressables.LoadAssetsAsync<SO_LocalizableAudioDatabase>(audioDatabasesLocaltions, null).Task;
 
             if (null == audioDatabases)
                 return;
 
             //initializing tags for each database
+            var taskPool = new List<Task>();
             foreach (var database in audioDatabases)
             {
                 database.tags = new List<string>();

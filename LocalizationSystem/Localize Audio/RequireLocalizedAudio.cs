@@ -40,7 +40,7 @@ namespace LocalizationSystemAudio
                 db?.GetLocalizedAudioByTag(audioTag);
             if (null == localizedClip)
             {
-                Debug.LogError("invalid audio clip");
+                Debug.LogError("audio not found");
                 return;
             }
             MethodToSetClip?.Invoke(localizedClip);
