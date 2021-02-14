@@ -35,13 +35,13 @@ namespace LocalizationSystemAudio
         static internal async Task Init()
         {
             var taskPool = new List<Task>();
+
             var audioDatabases =
                 await Addressables.LoadAssetsAsync<SO_LocalizableAudioDatabase>("Localization", null).Task;
+
             if (null == audioDatabases)
-            {
-                Debug.LogError("No database found, mark a SO_LocalizableAudioDatabase with Localizable Tag");
                 return;
-            }
+
             //initializing tags for each database
             foreach (var database in audioDatabases)
             {
@@ -75,7 +75,7 @@ namespace LocalizationSystemAudio
         {
             if (null == tags)
             {
-                Debug.LogError("error getting tags, database not found in Addressables");
+                Debug.LogError("Error getting tags, database not found in Addressables");
                 return null;
             }
 
