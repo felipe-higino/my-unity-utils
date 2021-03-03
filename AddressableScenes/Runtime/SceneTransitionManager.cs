@@ -3,10 +3,12 @@ using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
+using UnityEngine.SceneManagement;
 
 public static class SceneTransitionManager
 {
+    private static List<string> scenesInBuild = default;
+
     private static List<ISceneTransition> _transition = new List<ISceneTransition>();
     public static ISceneTransition Transition
     {
@@ -24,14 +26,8 @@ public static class SceneTransitionManager
 
     public static bool IsTransitioning { get; private set; } = false;
 
-    public static async Task LoadNewScene(AssetReferenceScene sceneAddress)
+    public static async Task LoadNewScene(string sceneName)
     {
-        if (null == sceneAddress)
-        {
-            Debug.LogError("Required scene is invalid");
-            return;
-        }
-
         if (IsTransitioning)
         {
             Debug.LogWarning("Transition is running, please wait for completion");
@@ -42,14 +38,45 @@ public static class SceneTransitionManager
         if (null != Transition)
         {
             await Transition.LowerCourtine();
-            await sceneAddress.LoadSceneAsync().Task;
+            await SceneLoadAsyncByName(sceneName);
             await Transition.LiftCourtine();
         }
         else
         {
             Debug.LogWarning("Transition not found");
-            await sceneAddress.LoadSceneAsync().Task;
+            await SceneLoadAsyncByName(sceneName);
         }
         IsTransitioning = false;
+    }
+
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSplashScreen)]
+    private static void Init()
+    {
+        scenesInBuild = new List<string>();
+        var sceneCount = SceneManager.sceneCountInBuildSettings;
+        for (int i = 0; i < sceneCount; i++)
+        {
+            string scenePath = SceneUtility.GetScenePathByBuildIndex(i);
+            int lastSlash = scenePath.LastIndexOf("/");
+            var sceneName = scenePath.Substring(lastSlash + 1, scenePath.LastIndexOf(".") - lastSlash - 1);
+            scenesInBuild.Add(sceneName);
+            Debug.Log(scenePath);
+        }
+    }
+
+    private static async Task SceneLoadAsyncByName(string sceneName)
+    {
+        if (!scenesInBuild.Contains(sceneName))
+        {
+            Debug.LogError("scene not in build path, returning to last scene...");
+            return;
+        }
+        var asyncOp = SceneManager.LoadSceneAsync(sceneName);
+        var task = new TaskCompletionSource<bool>();
+        asyncOp.completed += (x) =>
+        {
+            task.SetResult(true);
+        };
+        await task.Task;
     }
 }

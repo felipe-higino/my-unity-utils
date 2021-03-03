@@ -1,13 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
 
 [CreateAssetMenu(fileName = "Scene Controller UI", menuName = "Felipe Utils/Scene Controller", order = 50)]
 public class SO_SceneController : ScriptableObject
 {
     [SerializeField]
-    private AssetReferenceScene SceneToLoad = default;
+    private string nameOfScene = default;
 
     public async void LoadSelectedScene()
     {
@@ -17,6 +16,6 @@ public class SO_SceneController : ScriptableObject
             return;
         }
 
-        await SceneTransitionManager.LoadNewScene(SceneToLoad);
+        await SceneTransitionManager.LoadNewScene(nameOfScene);
     }
 }
