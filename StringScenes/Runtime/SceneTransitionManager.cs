@@ -60,7 +60,6 @@ public static class SceneTransitionManager
             int lastSlash = scenePath.LastIndexOf("/");
             var sceneName = scenePath.Substring(lastSlash + 1, scenePath.LastIndexOf(".") - lastSlash - 1);
             scenesInBuild.Add(sceneName);
-            Debug.Log(scenePath);
         }
     }
 

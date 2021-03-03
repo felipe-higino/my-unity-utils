@@ -56,7 +56,7 @@ namespace LocalizationSystemText
                     configAssetEditor?.OnInspectorGUI();
 
                     var validLocalizationAsset =
-                        null != configAsset.LocalizationTextAsset.editorAsset;
+                        null != configAsset.LocalizationTextAsset;
                     if (validLocalizationAsset)
                         if (GUILayout.Button("Download new TSV"))
                             DownloadAndOverrideText();
@@ -78,8 +78,9 @@ namespace LocalizationSystemText
         private static async void DownloadAndOverrideText()
         {
             var tsv = await configAsset.DownloadTSV();
-            var textAssetGUID = configAsset.LocalizationTextAsset.AssetGUID;
-            var path = AssetDatabase.GUIDToAssetPath(textAssetGUID);
+            // var textAssetGUID = configAsset.LocalizationTextAsset.AssetGUID;
+            // var path = AssetDatabase.GUIDToAssetPath(textAssetGUID);
+            var path = AssetDatabase.GetAssetPath(configAsset.LocalizationTextAsset);
             File.WriteAllText(path, tsv);
             AssetDatabase.Refresh();
             Debug.Log("Finished to write file!");

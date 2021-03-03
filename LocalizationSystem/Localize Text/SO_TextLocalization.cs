@@ -5,18 +5,9 @@ using System.Net.Http;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
 
 namespace LocalizationSystemText
 {
-    [Serializable]
-    public class AssetReferenceText : AssetReferenceT<TextAsset>
-    {
-        internal AssetReferenceText(string guid) : base(guid)
-        {
-        }
-    }
-
     public class SO_TextLocalization : ScriptableObject
     {
         [SerializeField, ReadOnly]
@@ -24,8 +15,8 @@ namespace LocalizationSystemText
         internal List<string> LanguageTags => languageTags;
 
         [SerializeField]
-        private AssetReferenceText localizationTextAsset = default;
-        internal AssetReferenceText LocalizationTextAsset => localizationTextAsset;
+        private TextAsset localizationTextAsset = default;
+        internal TextAsset LocalizationTextAsset => localizationTextAsset;
 
         [SerializeField]
         private string docId = "";
