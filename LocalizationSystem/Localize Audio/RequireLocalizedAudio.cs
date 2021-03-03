@@ -9,14 +9,6 @@ namespace LocalizationSystemAudio
     [Serializable]
     public class UnityEvent_SetAudioClip : UnityEvent<AudioClip> { }
 
-    // [Serializable]
-    // public class AssetReferenceAudioDatabase : AssetReferenceT<SO_LocalizableAudioDatabase>
-    // {
-    //     public AssetReferenceAudioDatabase(string guid) : base(guid)
-    //     {
-    //     }
-    // }
-
     public class RequireLocalizedAudio : MonoBehaviour
     {
         internal static List<RequireLocalizedAudio> AllLocalizableAudio = new List<RequireLocalizedAudio>();
