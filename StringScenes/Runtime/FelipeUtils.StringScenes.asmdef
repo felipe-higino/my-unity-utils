@@ -1,11 +1,7 @@
 {
-    "name": "FelipeUtils.AddressableScenes.Editor",
-    "references": [
-        "GUID:4066c327f39cf59499668062db61a91c"
-    ],
-    "includePlatforms": [
-        "Editor"
-    ],
+    "name": "FelipeUtils.StringScenes",
+    "references": [],
+    "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": false,
