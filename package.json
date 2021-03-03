@@ -1,10 +1,7 @@
 {
   "name": "com.felipe.felipe-utils",
-  "version": "1.3.0",
+  "version": "1.3.1",
   "displayName": "Felipe Utils",
   "description": "Unity Library, with usefull extensions and components .",
-  "type": "library",
-  "dependencies": {
-    "com.unity.addressables": "1.8.5"
-  }
+  "type": "library"
 }

@@ -1,9 +1,6 @@
 {
-    "name": "FelipeUtils.GameManagementFramework",
-    "references": [
-        "Unity.Addressables",
-        "Unity.ResourceManager"
-    ],
+    "name": "FelipeUtils.StringScenes",
+    "references": [],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,

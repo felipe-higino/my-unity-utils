@@ -4,7 +4,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
 
 namespace LocalizationSystemText
 {
@@ -14,15 +13,10 @@ namespace LocalizationSystemText
 
         static internal async Task Init()
         {
-            var TSVLocations =
-                await Addressables.LoadResourceLocationsAsync("Localization", typeof(TextAsset)).Task;
-
-            var first = TSVLocations.FirstOrDefault();
-            if (null == first)
-                return;
-
-            var TSVAsset =
-                await Addressables.LoadAssetAsync<TextAsset>(first).Task;
+            var TSVAsset = Resources
+                .FindObjectsOfTypeAll<SO_TextLocalization>()
+                .FirstOrDefault()
+                ?.LocalizationTextAsset;
 
             if (null == TSVAsset)
                 return;
@@ -31,6 +25,8 @@ namespace LocalizationSystemText
 
             var numberOfLanguages = TextsTable.Languages.Count;
             LocalizationSystem.NumberOfLanguages = numberOfLanguages;
+
+            await Task.CompletedTask;
         }
 
         internal static int GetLocalizedTextTagIndex(string tag)
