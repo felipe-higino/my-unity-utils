@@ -67,7 +67,7 @@ public static class SceneTransitionManager
     {
         if (!scenesInBuild.Contains(sceneName))
         {
-            Debug.LogError("scene not in build path, returning to last scene...");
+            Debug.LogError($"scene with name \"{sceneName}\" not in build path, returning to last scene...");
             return;
         }
         var asyncOp = SceneManager.LoadSceneAsync(sceneName);

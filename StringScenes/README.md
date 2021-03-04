@@ -6,7 +6,7 @@
 * How to transition
     * Register the wanted scenes as Addressables
     * Call something like: 
-    **SceneTransitionManager.LoadNewScene(*AssetReferenceScene*);**
+    **SceneTransitionManager.LoadNewScene(*name*);**
     * Or just use an LoadAddressableScene MonoBehaviour and call **Do_ChangeScene()**
 
 * Tips
