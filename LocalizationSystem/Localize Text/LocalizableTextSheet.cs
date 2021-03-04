@@ -14,8 +14,7 @@ namespace LocalizationSystemText
         static internal async Task Init()
         {
             var TSVAsset = Resources
-                .FindObjectsOfTypeAll<SO_TextLocalization>()
-                .FirstOrDefault()
+                .Load<SO_TextLocalization>(DefaultName.name)
                 ?.LocalizationTextAsset;
 
             if (null == TSVAsset)

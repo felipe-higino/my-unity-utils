@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine;
 using System.Threading.Tasks;
 
-public class LoadAddressableScene : MonoBehaviour
+public class LoadStringScene : MonoBehaviour
 {
     [SerializeField]
     private string sceneName = default;

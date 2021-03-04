@@ -10,8 +10,6 @@ namespace LocalizationSystemText
 {
     public class LocalizationEditorWindow : EditorWindow
     {
-        private const string configAssetName = "TextsLocalizationConfig";
-
         private static SO_TextLocalization configAsset = null;
         private static Editor configAssetEditor = null;
 
@@ -67,12 +65,12 @@ namespace LocalizationSystemText
         private static void CreateConfigAsset()
         {
             var instance = ScriptableObject.CreateInstance<SO_TextLocalization>();
-            AssetDatabase.CreateAsset(instance, $"Assets/Resources/{configAssetName}.asset");
+            AssetDatabase.CreateAsset(instance, $"Assets/Resources/{DefaultName.name}.asset");
         }
 
         private static void LoadConfigAsset()
         {
-            configAsset = Resources.Load<SO_TextLocalization>(configAssetName);
+            configAsset = Resources.Load<SO_TextLocalization>(DefaultName.name);
         }
 
         private static async void DownloadAndOverrideText()
